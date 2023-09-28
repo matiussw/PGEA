@@ -5,6 +5,8 @@ namespace PGEA.shared.Entities
 {
 	public class AcademicEvent
     {
+        public int Id { get; set; }
+
 
         [Display(Name = "Nombre de Evento")]
         [Required(ErrorMessage = "El Campo {0} es Obligatorio")]

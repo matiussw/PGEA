@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
+using PGEA.shared.Validation;
 
 namespace PGEA.shared.Entities
 {
@@ -29,6 +30,7 @@ namespace PGEA.shared.Entities
         [Display(Name = "Rol")]
         [Required(ErrorMessage = "El Campo {0} es Obligatorio")]
         [MaxLength(50, ErrorMessage = "El Campo {0} no puede tener mas de un {1} Caracteres")]
+        [RolValido]
         public String Rol { get; set; } = null!;
 
     }

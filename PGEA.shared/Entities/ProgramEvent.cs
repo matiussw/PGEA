@@ -5,6 +5,8 @@ namespace PGEA.shared.Entities
 {
 	public class ProgramEvent
 	{
+        public int Id { get; set; }
+
         [Display(Name = "Nombre Evento")]
         [Required(ErrorMessage = "El Campo {0} es Obligatorio")]
         [MaxLength(100, ErrorMessage = "El Campo {0} no puede tener mas de un {1} Caracteres")]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PGEA.API.Data;
+using PGEA.shared.Entities;
 
 namespace PGEA.API.Controllers
 { 
@@ -35,19 +36,24 @@ namespace PGEA.API.Controllers
         }
 
         [HttpPost("{id:int}")]
-        public async Task<ActionResult> PostAsync(Attendee researcher)
+        public async Task<ActionResult> PostAsync(Attendee attendee)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                _context.Add(researcher);
+                _context.Add(attendee);
                 await _context.SaveChangesAsync();
-                return Ok(researcher);
+                return Ok(attendee);
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
                 {
-                    return BadRequest("Ya existe un Investigador con el mismo Numero de cedula.");
+                    return BadRequest("Ya existe un Registro con el mismo Numero de cedula.");
                 }
 
                 return BadRequest(dbUpdateException.Message);
@@ -60,19 +66,25 @@ namespace PGEA.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> PutAsync(Researcher researcher)
+        public async Task<ActionResult> PutAsync(Attendee attendee)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             try
             {
-                _context.Update(researcher);
+                _context.Update(attendee);
                 await _context.SaveChangesAsync();
-                return Ok(researcher);
+                return Ok(attendee);
             }
             catch (DbUpdateException dbUpdateException)
             {
                 if (dbUpdateException.InnerException!.Message.Contains("duplicate"))
                 {
-                    return BadRequest("Ya existe un Investigador con el mismo Numero de cedula.");
+                    return BadRequest("Ya existe un parcipante con el mismo Numero de cedula.");
                 }
 
                 return BadRequest(dbUpdateException.Message);
@@ -87,7 +99,7 @@ namespace PGEA.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var categories = await _context.Researchers.FirstOrDefaultAsync(x => x.Cedula == id);
+            var categories = await _context.Attendees.FirstOrDefaultAsync(x => x.Cedula == id);
             if (categories == null)
             {
                 return NotFound();
