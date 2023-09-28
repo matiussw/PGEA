@@ -8,8 +8,10 @@
 
   <ItemGroup>
     <None Remove="Entities\" />
+    <None Remove="Validation\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Entities\" />
+    <Folder Include="Validation\" />
   </ItemGroup>
 </Project>
