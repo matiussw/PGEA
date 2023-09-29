@@ -1,0 +1,35 @@
+﻿@page "/attendees/create"
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Attende Create</h3>
+
+<AttendeeForm @ref="attendeeForm" Attendee="attendee" OnValidSubmit="CreateAsync" ReturnAction="Return" />
+
+
+
+@code {
+    private Attendee attendee = new();
+    private AttendeeForm? attendeeForm;
+
+    private async Task CreateAsync()
+    {
+        var httpResponse = await repository.Post("/api/attenders", attendee);
+        if (httpResponse.Error)
+        {
+            var message = await httpResponse.GetErrorMessage();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            return;
+        }
+
+        Return();
+    }
+
+    private void Return()
+    {
+        attendeeForm!.FormPostedSuccessfully = true;
+        navigationManager.NavigateTo("/attendee");
+    }
+}
+

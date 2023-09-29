@@ -25,7 +25,7 @@ namespace PGEA.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetAsync(int id)
+        public async Task<IActionResult> GetAsync(String id)
         {
             var researcher = await _context.Attendees.FirstOrDefaultAsync(x => x.Cedula == id);
             if (researcher == null)
@@ -87,7 +87,7 @@ namespace PGEA.API.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> DeleteAsync(int id)
+        public async Task<IActionResult> DeleteAsync(String id)
         {
             var categories = await _context.Attendees.FirstOrDefaultAsync(x => x.Cedula == id);
             if (categories == null)

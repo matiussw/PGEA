@@ -1,0 +1,104 @@
+﻿@page "/attendee"
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+
+<h3>Participantes</h3>
+<div>
+    <a class="btn btn-primary" href="/attendees/create">Nuevo Participante</a>
+</div>
+<GenericList MyList="Attendees">
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Participantes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Afiliación</th>
+                    <th>Área</th>
+                    <th>Rol</th>
+                    <th>Acciones</th>
+                </tr>
+                @foreach (var attende in Attendees!)
+                {
+                    <tr>
+
+                        <td>
+                            @attende.Name
+                        </td>
+                        <td>
+                            @attende.Afiliacion
+                        </td>
+                        <td>
+                            @attende.Area
+                        </td>
+                        <td>
+                            @attende.Rol
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="/attendee/edit/@attende.Cedula">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(() => DeleteAsync(attende.Cedula))>Borrar</button>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </Body>
+
+</GenericList>
+
+@code {
+    public List<Attendee>? Attendees { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+
+    }
+
+    private async Task LoadAsync()
+    {
+        var responseHttp = await repository.Get<List<Attendee>>("/api/attenders");
+        Attendees = responseHttp.Response;
+    }
+
+    private async Task DeleteAsync(string id)
+    {
+        var result = await sweetAlertService.FireAsync(new SweetAlertOptions
+        {
+            Title = "Confirmación",
+            Text = "¿Realmente deseas eliminar el registro?",
+            Icon = SweetAlertIcon.Question,
+            ShowCancelButton = true,
+            CancelButtonText = "No",
+            ConfirmButtonText = "Si"
+        });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHttp = await repository.Delete($"/api/attenders/{id}");
+        if (responseHttp.Error)
+        {
+            if (responseHttp.HttpResponseMessage.StatusCode != HttpStatusCode.NotFound)
+            {
+                var message = await responseHttp.GetErrorMessage();
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return;
+            }
+        }
+
+        await LoadAsync();
+    }
+}
+

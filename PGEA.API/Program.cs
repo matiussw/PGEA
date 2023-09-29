@@ -4,6 +4,7 @@ using PGEA.API.Data;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -31,6 +32,7 @@ app.UseCors(x => x
     .AllowCredentials());
 
 app.Run();
+
 
 
 

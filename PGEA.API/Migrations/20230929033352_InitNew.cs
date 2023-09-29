@@ -33,7 +33,7 @@ namespace PGEA.API.Migrations
                 name: "Attendees",
                 columns: table => new
                 {
-                    Cedula = table.Column<int>(type: "int", nullable: false),
+                    Cedula = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Afiliacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Area = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),

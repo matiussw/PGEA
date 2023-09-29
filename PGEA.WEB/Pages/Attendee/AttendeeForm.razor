@@ -1,0 +1,98 @@
+﻿@inject SweetAlertService sweetAlertService
+<NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation" />
+
+<EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label>Attende:</label>
+        <div>
+            <div class="form-group">
+                <label for="Cedula">Cédula:</label>
+                <InputText id="Cedula" class="form-control" @bind-Value="@Attendee.Cedula" type="number" inputmode="numeric" />
+                <ValidationMessage For="@(() => Attendee.Cedula)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Name">Nombre:</label>
+                <InputText id="Name" class="form-control" @bind-Value="@Attendee.Name" />
+                <ValidationMessage For="@(() => Attendee.Name)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Afiliacion">Afiliación:</label>
+                <InputText id="Afiliacion" class="form-control" @bind-Value="@Attendee.Afiliacion" />
+                <ValidationMessage For="@(() => Attendee.Afiliacion)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Area">Área:</label>
+                <InputText id="Area" class="form-control" @bind-Value="@Attendee.Area" />
+                <ValidationMessage For="@(() => Attendee.Area)" />
+            </div>
+
+            <div class="form-group">
+                <label for="Rol">Rol:</label>
+                <InputText id="Rol" class="form-control" @bind-Value="@Attendee.Rol" />
+                <ValidationMessage For="@(() => Attendee.Rol)" />
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    <button class="btn btn-success" @onclick="ReturnAction">Regresar</button>
+</EditForm>
+
+
+
+@code {
+    private EditContext editContext = null!;
+
+ 
+
+    [Parameter]
+    [EditorRequired]
+    public Attendee Attendee { get; set; } = null!;
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnValidSubmit { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback ReturnAction { get; set; }
+
+    public bool FormPostedSuccessfully { get; set; }
+
+    protected override void OnInitialized()
+    {
+      
+        editContext = new(Attendee);
+    }
+
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        var formWasMofied = editContext.IsModified();
+        if (!formWasMofied || FormPostedSuccessfully)
+        {
+            return;
+        }
+
+        var result = await sweetAlertService.FireAsync(new SweetAlertOptions
+        {
+            Title = "Confirmación",
+            Text = "¿Deseas abandonar la página y perder los cambios?",
+            Icon = SweetAlertIcon.Question,
+            ShowCancelButton = true,
+            CancelButtonText = "No",
+            ConfirmButtonText = "Si"
+        });
+
+        var confirm = !string.IsNullOrEmpty(result.Value);
+        if (confirm)
+        {
+            return;
+        }
+
+        context.PreventNavigation();
+    }
+
+}

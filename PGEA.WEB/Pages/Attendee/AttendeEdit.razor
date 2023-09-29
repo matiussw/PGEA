@@ -1,0 +1,65 @@
+﻿@page "/attendee/edit/{Id:int}"
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+<h3>Attendee Edit</h3>
+
+@if (attendee is null)
+{
+    <p>Cargando...</p>
+}
+else
+{
+
+    <AttendeeForm @ref="attendeeForm" Attendee="attendee" OnValidSubmit="EditAsync" ReturnAction="Return" />
+
+
+}
+
+
+@code {
+    private Attendee? attendee;
+    private AttendeeForm? attendeeForm;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var responseHttp = await repository.Get<Attendee>($"/api/attenders/{Id}");
+        if (responseHttp.Error)
+        {
+            if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("/attendee");
+                return;
+            }
+
+            var message = await responseHttp.GetErrorMessage();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            return;
+        }
+
+        attendee = responseHttp.Response;
+    }
+
+    private async Task EditAsync()
+    {
+        var responseHttp = await repository.Put("/api/attenders", attendee);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessage();
+            await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+            return;
+        }
+
+        Return();
+    }
+
+    private void Return()
+    {
+        attendeeForm!.FormPostedSuccessfully = true;
+        navigationManager.NavigateTo("/attendee");
+    }
+}

@@ -12,7 +12,7 @@ using PGEA.API.Data;
 namespace PGEA.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230929002648_InitNew")]
+    [Migration("20230929033352_InitNew")]
     partial class InitNew
     {
         /// <inheritdoc />
@@ -69,8 +69,8 @@ namespace PGEA.API.Migrations
 
             modelBuilder.Entity("PGEA.shared.Entities.Attendee", b =>
                 {
-                    b.Property<int>("Cedula")
-                        .HasColumnType("int");
+                    b.Property<string>("Cedula")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Afiliacion")
                         .IsRequired()

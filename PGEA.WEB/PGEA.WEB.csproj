@@ -15,12 +15,20 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.11" PrivateAssets="all" />
-    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.5.0" />
+    <PackageReference Include="CurrieTechnologies.Razor.SweetAlert2" Version="5.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PGEA.shared\PGEA.shared.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Pages\Attendee\" />
+    <None Remove="Pages\AcademicEvent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pages\Attendee\" />
+    <Folder Include="Pages\AcademicEvent\" />
   </ItemGroup>
 </Project>

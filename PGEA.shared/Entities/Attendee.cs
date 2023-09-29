@@ -9,7 +9,7 @@ namespace PGEA.shared.Entities
 	{
         [Display(Name = "Cedula Parcipante")]
         [Required(ErrorMessage = "El Campo {0} es Obligatorio")]
-        public int Cedula { get; set; }
+        public String Cedula { get; set; } = null!;
 
         [Display(Name = "Nombre Parcipante")]
         [Required(ErrorMessage = "El Campo {0} es Obligatorio")]

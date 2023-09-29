@@ -66,8 +66,8 @@ namespace PGEA.API.Migrations
 
             modelBuilder.Entity("PGEA.shared.Entities.Attendee", b =>
                 {
-                    b.Property<int>("Cedula")
-                        .HasColumnType("int");
+                    b.Property<string>("Cedula")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Afiliacion")
                         .IsRequired()

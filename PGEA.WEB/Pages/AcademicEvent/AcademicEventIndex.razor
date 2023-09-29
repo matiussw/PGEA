@@ -1,0 +1,112 @@
+﻿@page "/academic"
+@inject IRepository repository
+@inject NavigationManager navigationManager
+@inject SweetAlertService sweetAlertService
+
+
+<h3>Participantes</h3>
+<div>
+    <a class="btn btn-primary" href="/attendees/create">Nuevo Participante</a>
+</div>
+<GenericList MyList="AcademicEvents">
+    <Body>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Academicos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Nombre Projecto</th>
+                    <th>Fecha Inicio </th>
+                    <th>Fecha Fin</th>
+                    <th>Ubicacicion</th>
+                    <th>Descripcion</th>
+                    <th>Tema</th>
+                    <th>Acciones</th>
+                </tr>
+                @foreach (var academic in AcademicEvents!)
+                {
+                    <tr>
+
+                        <td>
+                            @academic.Name
+                        </td>
+                        <td>
+                            @academic.FechaInicio
+                        </td>
+                        <td>
+                            @academic.FechaFinalizacion
+                        </td>
+                        <td>
+                            @academic.Ubicacion
+                        </td>
+                        <td>
+                            @academic.Descripcion
+                        </td>
+                        <td>
+                            @academic.Tema
+                        </td>
+                        <td>
+                            <a class="btn btn-warning" href="/attendee/edit/@academic.Id">Editar</a>
+                            <button class="btn btn-danger" @onclick=@(() => DeleteAsync(academic.Id))>Borrar</button>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </Body>
+
+</GenericList>
+
+@code {
+    public List<AcademicEvent>? AcademicEvents { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadAsync();
+
+    }
+
+    private async Task LoadAsync()
+    {
+        var responseHttp = await repository.Get<List<AcademicEvent>>("/api/academicevent");
+        AcademicEvents = responseHttp.Response;
+    }
+
+    private async Task DeleteAsync(int id)
+    {
+        var result = await sweetAlertService.FireAsync(new SweetAlertOptions
+        {
+            Title = "Confirmación",
+            Text = "¿Realmente deseas eliminar el registro?",
+            Icon = SweetAlertIcon.Question,
+            ShowCancelButton = true,
+            CancelButtonText = "No",
+            ConfirmButtonText = "Si"
+        });
+
+        var confirm = string.IsNullOrEmpty(result.Value);
+        if (confirm)
+        {
+            return;
+        }
+
+        var responseHttp = await repository.Delete($"/api/academicevent/{id}");
+        if (responseHttp.Error)
+        {
+            if (responseHttp.HttpResponseMessage.StatusCode != HttpStatusCode.NotFound)
+            {
+                var message = await responseHttp.GetErrorMessage();
+                await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
+                return;
+            }
+        }
+
+        await LoadAsync();
+    }
+}
+
