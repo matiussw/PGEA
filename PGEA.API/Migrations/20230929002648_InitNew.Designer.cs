@@ -12,8 +12,8 @@ using PGEA.API.Data;
 namespace PGEA.API.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230928224108_init")]
-    partial class init
+    [Migration("20230929002648_InitNew")]
+    partial class InitNew
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,10 +70,7 @@ namespace PGEA.API.Migrations
             modelBuilder.Entity("PGEA.shared.Entities.Attendee", b =>
                 {
                     b.Property<int>("Cedula")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Cedula"));
 
                     b.Property<string>("Afiliacion")
                         .IsRequired()
@@ -122,7 +119,6 @@ namespace PGEA.API.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Sesiones")
-                        .HasMaxLength(200)
                         .HasColumnType("int");
 
                     b.Property<string>("Temas")

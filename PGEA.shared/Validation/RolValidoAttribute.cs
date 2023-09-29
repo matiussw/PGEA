@@ -5,7 +5,8 @@ namespace PGEA.shared.Validation
 {
     public class RolValidoAttribute : ValidationAttribute
     {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult IsValid(object value,
+                                                    ValidationContext validationContext)
         {
             var allowedRoles = new[] { "ponente", "asistente" };
             var inputValue = value as string;

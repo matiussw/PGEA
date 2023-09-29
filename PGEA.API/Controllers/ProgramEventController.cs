@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PGEA.API.Data;
@@ -24,10 +24,10 @@ namespace PGEA.API.Controllers
             return Ok(await _context.ProgramEvents.ToListAsync());
         }
 
-        [HttpGet("{name:string}")]
-        public async Task<IActionResult> GetAsync(string name)
+        [HttpGet("{id:int}")]
+        public async Task<IActionResult> GetAsync(int id)
         {
-            var researcher = await _context.ProgramEvents.FirstOrDefaultAsync(x => x.Name == name);
+            var researcher = await _context.ProgramEvents.FirstOrDefaultAsync(x => x.Id == id);
             if (researcher == null)
             {
                 return NotFound();
@@ -35,7 +35,7 @@ namespace PGEA.API.Controllers
             return Ok(researcher);
         }
 
-        [HttpPost("{name:string}")]
+        [HttpPost]
         public async Task<ActionResult> PostAsync(ProgramEvent programEvent)
         {
             try
@@ -63,12 +63,6 @@ namespace PGEA.API.Controllers
         [HttpPut]
         public async Task<ActionResult> PutAsync(ProgramEvent programEvent)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 _context.Update(programEvent);
@@ -91,10 +85,10 @@ namespace PGEA.API.Controllers
 
         }
 
-        [HttpDelete("{name:string}")]
-        public async Task<IActionResult> DeleteAsync(string name)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            var categories = await _context.ProgramEvents.FirstOrDefaultAsync(x => x.Name == name);
+            var categories = await _context.ProgramEvents.FirstOrDefaultAsync(x => x.Id == id);
             if (categories == null)
             {
                 return NotFound();

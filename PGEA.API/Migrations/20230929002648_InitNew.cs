@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace PGEA.API.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class InitNew : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,8 +33,7 @@ namespace PGEA.API.Migrations
                 name: "Attendees",
                 columns: table => new
                 {
-                    Cedula = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cedula = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Afiliacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Area = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
@@ -53,7 +52,7 @@ namespace PGEA.API.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Sesiones = table.Column<int>(type: "int", maxLength: 200, nullable: false),
+                    Sesiones = table.Column<int>(type: "int", nullable: false),
                     Ponente = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Temas = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },

@@ -15,10 +15,6 @@ namespace PGEA.shared.Entities
 
         public DateTime FechaInicio { get; set; }
 
-        [Display(Name = "Sesiones")]
-        [Required(ErrorMessage = "El Campo {0} es Obligatorio")]
-        [MaxLength(200, ErrorMessage = "El Campo {0} no puede tener mas de un {1} Caracteres")]
-
         public int Sesiones { get; set; }
 
         [Display(Name = "Ponente")]

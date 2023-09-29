@@ -67,10 +67,7 @@ namespace PGEA.API.Migrations
             modelBuilder.Entity("PGEA.shared.Entities.Attendee", b =>
                 {
                     b.Property<int>("Cedula")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Cedula"));
 
                     b.Property<string>("Afiliacion")
                         .IsRequired()
@@ -119,7 +116,6 @@ namespace PGEA.API.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Sesiones")
-                        .HasMaxLength(200)
                         .HasColumnType("int");
 
                     b.Property<string>("Temas")

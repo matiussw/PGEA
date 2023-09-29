@@ -35,14 +35,10 @@ namespace PGEA.API.Controllers
             return Ok(researcher);
         }
 
-        [HttpPost("{id:int}")]
+        [HttpPost]
         public async Task<ActionResult> PostAsync(Attendee attendee)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
+         
             try
             {
                 _context.Add(attendee);
@@ -68,12 +64,6 @@ namespace PGEA.API.Controllers
         [HttpPut]
         public async Task<ActionResult> PutAsync(Attendee attendee)
         {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 _context.Update(attendee);

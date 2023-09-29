@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGEA.API", "PGEA.API\PGEA.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PGEA.WEB", "PGEA.WEB\PGEA.WEB.csproj", "{1D3194B7-2438-4D33-BF66-0C106BA09FD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "teste", "teste\teste.csproj", "{944C9F1D-AF7C-4D42-9DDE-B923C355F118}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1D3194B7-2438-4D33-BF66-0C106BA09FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1D3194B7-2438-4D33-BF66-0C106BA09FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1D3194B7-2438-4D33-BF66-0C106BA09FD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{944C9F1D-AF7C-4D42-9DDE-B923C355F118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{944C9F1D-AF7C-4D42-9DDE-B923C355F118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{944C9F1D-AF7C-4D42-9DDE-B923C355F118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{944C9F1D-AF7C-4D42-9DDE-B923C355F118}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
